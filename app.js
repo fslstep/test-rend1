@@ -4,6 +4,19 @@ const port = process.env.PORT || 3001;
 
 app.get("/", (req, res) => res.type('html').send(html));
 
+app.get('/message', (req, res) => {
+  // Estrai il parametro "text" dalla query string
+  const text = req.query.text;
+
+  // Se non c'è il parametro "text", restituisci un errore
+  if (!text) {
+    return res.status(400).json({ error: 'Parametro "text" mancante' });
+  }
+
+  // Restituisci un JSON con il messaggio
+  res.json({ message: text });
+});
+
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 server.keepAliveTimeout = 120 * 1000;
